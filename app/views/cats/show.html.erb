@@ -6,3 +6,13 @@
   </tr>
   <% end %>
 </table>
+
+<div id="requests">
+  <div class="header">Start Date</div><div class="header">End Date</div>
+  <% @cat.rental_requests.order(:start_date).each do |req| %>
+    <div class="request">
+      <div class="date"><%= req.start_date %></div>
+      <div class="date"><%= req.end_date %></div>
+    </div>
+  <% end %>
+</div>

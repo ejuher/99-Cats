@@ -3,7 +3,20 @@ class CatRentalRequest < ActiveRecord::Base
   validates :status, inclusion: { in: ['PENDING', 'APPROVED', 'DENIED'] }
   validate :no_other_rentals_approved_in_range
   
-
+  after_initialize :set_status_to_pending
+  
+  belongs_to(
+    :cat,
+    class_name: 'Cat',
+    foreign_key: :cat_id,
+    primary_key: :id
+  )
+  
+  #private
+  
+  def set_status_to_pending
+    status ||= 'PENDING'
+  end
   
   def no_other_rentals_approved_in_range
     unless overlapping_approved_requests.empty?

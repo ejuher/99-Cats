@@ -9,4 +9,12 @@ class Cat < ActiveRecord::Base
     in: ['M', 'F']
   }
   validates :age, :birth_date, :color, :name, :sex, :description, presence: true
+
+  has_many(
+    :rental_requests,
+    class_name: "CatRentalRequest",
+    foreign_key: :cat_id,
+    primary_key: :id,
+    dependent: :destroy
+  )
 end

@@ -11,3 +11,25 @@
  *= require_self
  *= require_tree .
  */
+
+.requests {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 100px;
+}
+
+.header {
+  /*float: left;
+  margin-right: 25px;*/
+  display: table-cell;
+}
+
+.request {
+  /*clear: both;*/
+  display: table-row;
+}
+
+.request .date {
+  /*float: left;*/
+  display: table-cell;
+}
