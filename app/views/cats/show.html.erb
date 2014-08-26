@@ -13,6 +13,14 @@
     <div class="request">
       <div class="date"><%= req.start_date %></div>
       <div class="date"><%= req.end_date %></div>
+      <div class="id"><%= req.id %></div>
+      
+      <% if req.pending? %>
+      <div class="approval">
+        <%= button_to "Approve", approve_cat_rental_request_url(req), method: :get %>
+        <%= button_to "Deny", deny_cat_rental_request_url(req), method: :get %>
+      </div>
+      <% end %>
     </div>
   <% end %>
 </div>

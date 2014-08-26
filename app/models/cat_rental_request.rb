@@ -12,10 +12,28 @@ class CatRentalRequest < ActiveRecord::Base
     primary_key: :id
   )
   
-  #private
+  def approve!
+    self.class.transaction do
+      self.status = 'APPROVED'
+      debugger
+      self.save!
+      overlapping_pending_requests.update_all(status: 'DENIED')
+    end
+  end
+  
+  def deny!
+    self.status = 'DENIED'
+    self.save!
+  end
+  
+  def pending?
+    self.status == "PENDING"
+  end
+  
+  # private
   
   def set_status_to_pending
-    status ||= 'PENDING'
+    self.status ||= 'PENDING'
   end
   
   def no_other_rentals_approved_in_range
@@ -29,8 +47,8 @@ class CatRentalRequest < ActiveRecord::Base
       '(? BETWEEN start_date AND end_date) OR (? BETWEEN start_date AND end_date)'
     
     self.class
-      .where(cat_id: cat_id)
-      .where.not(id: id)
+      .where(cat_id: self.cat_id)
+      .where.not(id: self.id)
       .where(
        range_where,
         start_date,
@@ -40,5 +58,9 @@ class CatRentalRequest < ActiveRecord::Base
   
   def overlapping_approved_requests
     overlapping_requests.where(status: 'APPROVED')
+  end
+  
+  def overlapping_pending_requests
+    overlapping_requests.where(status: 'PENDING')
   end
 end
