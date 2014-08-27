@@ -7,8 +7,18 @@ class ApplicationController < ActionController::Base
   
   private
   
+  def login_user!
+    @user.reset_session_token!
+    session[:session_token] = @user.session_token
+    
+    redirect_to cats_url
+  end
+  
   def current_user
-    puts session[:session_token]
     User.find_by_token(session[:session_token])
+  end
+  
+  def skip_if_logged_in
+    redirect_to cats_url if current_user
   end
 end

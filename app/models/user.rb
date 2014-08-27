@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :user_name, :password_digest, :session_token, presence: true
   validates :user_name, :session_token, uniqueness: true
   
-  before_save :ensure_session_token, on: :create
+  after_initialize :ensure_session_token# , on: :create
   
   def self.find_by_username(user_name)
     find_by(user_name: user_name)
