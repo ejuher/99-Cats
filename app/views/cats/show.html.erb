@@ -1,9 +1,11 @@
-<h2><%= @cat.name %></h2>
+
 
 <div class="cat-info">
   <div class="image">
-    <img src="http://placekitten.com/300/325" />
+    <img src="http://placekitten.com/300/300" />
   </div>
+  
+  <h2><%= @cat.name %></h2>
 
   <div id="cats">
     <% @display_attrs.each do |name, value| %>
@@ -14,7 +16,7 @@
     <% end %>
     <div class="attribute">
       <div class="name">Description</div>
-      <div class="value"><%= @cat.description %> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, urna vel scelerisque aliquam, mauris diam pulvinar velit, vitae placerat metus nibh at nibh. Praesent a orci viverra felis placerat suscipit sit amet quis quam. Fusce sed velit tortor. Suspendisse cursus iaculis convallis. Cras cursus nibh mi, tempus egestas est facilisis nec. Curabitur imperdiet dignissim dolor, in faucibus ex ultricies et. Integer tempor justo in enim egestas, non malesuada dolor tempus. Integer dictum porta tellus rutrum imperdiet. Aenean ut rutrum diam.</div>
+      <div class="value"><%= @cat.description %></div>
     </div>
   </div>
 </div>

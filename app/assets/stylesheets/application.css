@@ -19,6 +19,10 @@ body {
   margin-left: 60px;
 }
 
+/** {
+  background-color: hsla(255, 60%, 70%, 0.2);
+}*/
+
 
 #requests {
   display: table;
@@ -62,6 +66,11 @@ body {
   .attribute {
     display: table-row;
   }
+  /*#e4ebeb*/
+  .attribute:nth-child(odd),
+  .request:nth-child(even) {
+    background-color: #DFF0F2;
+  }
   
   .attribute .name {
     width: 100px;
@@ -74,18 +83,25 @@ body {
 
   .attribute .name, .attribute .value {
     display: table-cell;
+    padding: 4px;
   }
   
 .image {
   float: right;
+  -webkit-transition: all .2s ease-in-out;
+}
+
+.image:hover {
+  -webkit-transform: scale(1.1);
 }
 
 .cat-info {
   max-width: 900px;
+  min-height: 250px;
 }
 
 .req-info {
-  max-width: 800px;
+  max-width: 900px;
 }
 
 li {
@@ -105,4 +121,5 @@ a:hover {
 #request-form {
   float: right;
   margin-top: -16px;
+  width: 300px;
 }
