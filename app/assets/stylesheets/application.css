@@ -12,24 +12,97 @@
  *= require_tree .
  */
 
-.requests {
+body {
+  font-family: "HelveticaNeue-Light", sans-serif;
+  font-weight: 300;
+  margin: 40px;
+  margin-left: 60px;
+}
+
+
+#requests {
   display: table;
   border-collapse: separate;
-  border-spacing: 100px;
+  border-spacing: 6px;
+  margin-left: -6px;
 }
 
-.header {
-  /*float: left;
-  margin-right: 25px;*/
-  display: table-cell;
+  #requests .header {
+    display: table-cell;
+    font-weight: bold;
+    width: 115px;
+  }
+
+  .request {
+    display: table-row;
+  }
+
+  .request .date {
+    display: table-cell;
+  }
+  
+  .approval {
+    display: table-cell;
+  }
+  
+  .approval input {
+    display: inline; 
+  }
+  
+#cats {
+  display: table;
+  
+  width: 500px;
+  
+  margin-left: -5px;
+  border-collapse: separate;
+  border-spacing: 6px;
 }
 
-.request {
-  /*clear: both;*/
-  display: table-row;
+  .attribute {
+    display: table-row;
+  }
+  
+  .attribute .name {
+    width: 100px;
+    font-weight: bold;
+  }
+  
+  .attribute .value {
+    width: 375px;
+  }
+
+  .attribute .name, .attribute .value {
+    display: table-cell;
+  }
+  
+.image {
+  float: right;
 }
 
-.request .date {
-  /*float: left;*/
-  display: table-cell;
+.cat-info {
+  max-width: 900px;
+}
+
+.req-info {
+  max-width: 800px;
+}
+
+li {
+  margin: 5px 5px;
+  font-size: 14pt;
+}
+
+a {
+  text-decoration: none;
+  color: #218693;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#request-form {
+  float: right;
+  margin-top: -16px;
 }

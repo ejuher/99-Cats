@@ -15,7 +15,6 @@ class CatRentalRequest < ActiveRecord::Base
   def approve!
     self.class.transaction do
       self.status = 'APPROVED'
-      debugger
       self.save!
       overlapping_pending_requests.update_all(status: 'DENIED')
     end
@@ -30,7 +29,7 @@ class CatRentalRequest < ActiveRecord::Base
     self.status == "PENDING"
   end
   
-  # private
+  private
   
   def set_status_to_pending
     self.status ||= 'PENDING'

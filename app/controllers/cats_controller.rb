@@ -4,8 +4,20 @@ class CatsController < ApplicationController
     render :index
   end
   
+  def request_rental
+    @cat = Cat.find(params[:id])
+    @request = CatRentalRequest.new(cat_id: @cat.id)
+    
+    redirect_to 
+  end
+  
   def show
     @cat = Cat.find(params[:id])
+    @request = CatRentalRequest.new(cat_id: @cat.id)
+    @requests = @cat.rental_requests.order(:start_date)
+    @display_attrs = @cat.attributes.except(
+      "id", "created_at", "updated_at", "name", "description"
+    )
     render :show
   end
   

@@ -8,7 +8,7 @@ class CatRentalRequestsController < ApplicationController
     @request = CatRentalRequest.new(req_params)
     
     if @request.save
-      redirect_to cats_url
+      redirect_to cat_url(@request.cat)
     else
       render :new
     end

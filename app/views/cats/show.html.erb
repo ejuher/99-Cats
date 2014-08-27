@@ -1,26 +1,53 @@
-<table>
-  <% @cat.attributes.each do |name, value| %>
-  <tr>
-    <td><%= name %></td>
-    <td><%= value %></td>
-  </tr>
-  <% end %>
-</table>
+<h2><%= @cat.name %></h2>
 
-<div id="requests">
-  <div class="header">Start Date</div><div class="header">End Date</div>
-  <% @cat.rental_requests.order(:start_date).each do |req| %>
-    <div class="request">
-      <div class="date"><%= req.start_date %></div>
-      <div class="date"><%= req.end_date %></div>
-      <div class="id"><%= req.id %></div>
-      
-      <% if req.pending? %>
-      <div class="approval">
-        <%= button_to "Approve", approve_cat_rental_request_url(req), method: :get %>
-        <%= button_to "Deny", deny_cat_rental_request_url(req), method: :get %>
-      </div>
-      <% end %>
+<div class="cat-info">
+  <div class="image">
+    <img src="http://placekitten.com/300/325" />
+  </div>
+
+  <div id="cats">
+    <% @display_attrs.each do |name, value| %>
+    <div class="attribute">
+      <div class="name"><%= name.humanize %></div>
+      <div class="value"><%= value %></div>
     </div>
-  <% end %>
+    <% end %>
+    <div class="attribute">
+      <div class="name">Description</div>
+      <div class="value"><%= @cat.description %> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam volutpat, urna vel scelerisque aliquam, mauris diam pulvinar velit, vitae placerat metus nibh at nibh. Praesent a orci viverra felis placerat suscipit sit amet quis quam. Fusce sed velit tortor. Suspendisse cursus iaculis convallis. Cras cursus nibh mi, tempus egestas est facilisis nec. Curabitur imperdiet dignissim dolor, in faucibus ex ultricies et. Integer tempor justo in enim egestas, non malesuada dolor tempus. Integer dictum porta tellus rutrum imperdiet. Aenean ut rutrum diam.</div>
+    </div>
+  </div>
 </div>
+
+<br>
+
+<div class="req-info">
+  <h3>Rental Requests</h3>
+  <%= render partial: "cat_rental_requests/new", locals: { request: @request } %>
+  <div id="requests">
+    <div class="header">Start Date</div>
+    <div class="header">End Date</div>
+    <div class="header">Status</div>
+    
+    <% if @requests.any? { |r| r.pending? } %>
+    <div class="header">Approve</div>  
+    <% end %> 
+  
+    <% @requests.each do |req| %>
+      <div class="request">
+        <div class="date"><%= req.start_date %></div>
+        <div class="date"><%= req.end_date %></div>
+        <div class="status"><%= req.status.capitalize %></div>
+      
+        <% if req.pending? %>
+        <div class="approval">
+          <%= link_to "Approve", approve_cat_rental_request_url(req) %> / 
+          <%= link_to "Deny", deny_cat_rental_request_url(req) %>
+        </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
