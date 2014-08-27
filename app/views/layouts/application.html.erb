@@ -10,6 +10,13 @@
 <div id="navigation">
 <%= link_to "<< Cats >>", cats_url %>
 </div>
+<div id="login">
+<% if current_user %>
+<%= button_to "Log Out", session_url, method: :delete %>
+<% end %>
+
+<%= current_user ? current_user.user_name : link_to("Log In", new_session_url) %>
+</div>
 
 
 <%= yield %>
