@@ -27,21 +27,27 @@
   <h3>Rental Requests</h3>
   <%= render partial: "cat_rental_requests/new", locals: { request: @request } %>
   <div id="requests">
+    <div class="header">Requester</div>
     <div class="header">Start Date</div>
     <div class="header">End Date</div>
     <div class="header">Status</div>
     
-    <% if @requests.any? { |r| r.pending? } %>
+    <% if @requests.any? { |r| r.pending? && r.cat_owner == current_user } %>
     <div class="header">Approve</div>  
     <% end %> 
+    
   
-    <% @requests.each do |req| %>
+    <% @requests.each do |req| %>    
       <div class="request">
+        <div class="user">
+          <%= req.user.user_name %>
+        </div>
+        
         <div class="date"><%= req.start_date %></div>
         <div class="date"><%= req.end_date %></div>
         <div class="status"><%= req.status.capitalize %></div>
       
-        <% if req.pending? %>
+        <% if req.pending? && current_user == req.cat_owner %>
         <div class="approval">
           <%= link_to "Approve", approve_cat_rental_request_url(req) %> / 
           <%= link_to "Deny", deny_cat_rental_request_url(req) %>

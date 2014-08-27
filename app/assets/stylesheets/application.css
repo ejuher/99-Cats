@@ -53,6 +53,10 @@ body {
     display: inline; 
   }
   
+  .user {
+    display: table-cell;
+  }
+  
 #cats {
   display: table;
   
@@ -70,6 +74,10 @@ body {
   .attribute:nth-child(odd),
   .request:nth-child(even) {
     background-color: #DFF0F2;
+  }
+  
+  .request .approval {
+    background-color: #fff !important;
   }
   
   .attribute .name {
@@ -96,12 +104,12 @@ body {
 }
 
 .cat-info {
-  max-width: 900px;
+  max-width: 950px;
   min-height: 250px;
 }
 
 .req-info {
-  max-width: 900px;
+  max-width: 950px;
 }
 
 li {

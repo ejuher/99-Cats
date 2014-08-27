@@ -1,5 +1,5 @@
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, :status, presence: true
+  validates :cat_id, :start_date, :end_date, :status, :user_id, presence: true
   validates :status, inclusion: { in: ['PENDING', 'APPROVED', 'DENIED'] }
   validate :no_other_rentals_approved_in_range
   
@@ -9,6 +9,19 @@ class CatRentalRequest < ActiveRecord::Base
     :cat,
     class_name: 'Cat',
     foreign_key: :cat_id,
+    primary_key: :id
+  )
+  
+  has_one(
+    :cat_owner,
+    through: :cat,
+    source: :owner
+  )
+  
+  belongs_to(
+    :user,
+    class_name: 'User',
+    foreign_key: :user_id,
     primary_key: :id
   )
   
@@ -43,7 +56,7 @@ class CatRentalRequest < ActiveRecord::Base
   
   def overlapping_requests
     range_where = 
-      '(? BETWEEN start_date AND end_date) OR (? BETWEEN start_date AND end_date)'
+    '(? < end_date) AND (? > start_date)'
     
     self.class
       .where(cat_id: self.cat_id)
