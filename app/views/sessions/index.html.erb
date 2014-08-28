@@ -3,6 +3,7 @@
 <div class="sessions">
 <% @sessions.each do |session| %>
   <div class="session">
+    <div class="ip"><%= session.ip %></div>
     <div class="description"><%= session.device_description %></div>
     <div class="timestamp"><%= session.updated_at %></div>
     <div class="button-container"><%= button_to "Log Out",                            session_url(session), method: :delete %></div>  

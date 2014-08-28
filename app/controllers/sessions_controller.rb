@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
-  before_action :skip_if_logged_in , except: [:destroy, :index]
+  before_action :skip_if_logged_in, except: [:destroy, :index]
   before_action :prevent_unauthorized_logouts, only: [:destroy]
+  before_action :ensure_logged_in, only: [:destroy, :index]
   
   def create
     @user = User.find_by_credentials(
@@ -25,8 +26,7 @@ class SessionsController < ApplicationController
 #     Session.find_by_token(token).destroy
 #     session[:session_token] = nil
     current_session.destroy
-    puts "Current Session: #{current_session.id}"
-    puts "Current User's Session Id: #{current_user.session_id}"
+
     if current_session.id == current_user.session_id
       render :new
     else
@@ -46,13 +46,15 @@ class SessionsController < ApplicationController
   end
   
   def prevent_unauthorized_logouts
-    if current_user.nil?
-      redirect_to new_session_url
-      return
-    end
-    
     unless current_user.sessions.include? current_session
       redirect_to cats_url 
     end
-  end  
+  end 
+  
+  def ensure_logged_in
+    if current_user.nil?
+      redirect_to new_session_url
+    end
+  end 
+  
 end

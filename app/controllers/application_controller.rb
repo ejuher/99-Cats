@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   
   def login_user!
     session[:session_token] = Session.add_token_for_user(
-      @user, request.env["HTTP_USER_AGENT"]
+      @user, request.env["HTTP_USER_AGENT"], request.remote_ip
     )
     
     # @user.reset_session_token!
