@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :user_name, :password_digest, :session_token, presence: true
   validates :user_name, :session_token, uniqueness: true
   
-  after_initialize :ensure_session_token# , on: :create
+  #after_initialize :ensure_session_token
   
   has_many(
     :cats,
@@ -18,6 +18,13 @@ class User < ActiveRecord::Base
     primary_key: :id
   )
   
+  has_many(
+    :sessions,
+    class_name: 'Session',
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+  
   def self.find_by_username(user_name)
     find_by(user_name: user_name)
   end
@@ -29,7 +36,22 @@ class User < ActiveRecord::Base
   end
   
   def self.find_by_token(token)
-    find_by(session_token: token)
+    session = Session.find_by_token(token)
+    user = session.user rescue nil
+    
+    user.session_id = session.id unless user.nil?
+    
+    user
+    
+    # find_by(session_token: token)
+  end
+  
+  def session_id=(id)
+    @session_id = id
+  end
+  
+  def session_id
+    @session_id
   end
   
   def password=(password)
@@ -40,13 +62,13 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(self.password_digest).is_password?(password)
   end
   
-  def ensure_session_token
-    self.session_token ||= SecureRandom::urlsafe_base64(16)
-  end
+  # def ensure_session_token
+  #   self.session_token ||= SecureRandom::urlsafe_base64(16)
+  # end
   
-  def reset_session_token!
-    self.session_token = SecureRandom::urlsafe_base64(16)
-    self.save!
-    self.session_token
-  end
+  # def reset_session_token!
+  #   self.session_token = SecureRandom::urlsafe_base64(16)
+  #   self.save!
+  #   self.session_token
+  # end
 end

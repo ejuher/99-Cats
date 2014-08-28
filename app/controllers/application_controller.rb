@@ -8,8 +8,12 @@ class ApplicationController < ActionController::Base
   private
   
   def login_user!
-    @user.reset_session_token!
-    session[:session_token] = @user.session_token
+    session[:session_token] = Session.add_token_for_user(
+      @user, request.env["HTTP_USER_AGENT"]
+    )
+    
+    # @user.reset_session_token!
+    # session[:session_token] = @user.session_token
     
     redirect_to cats_url
   end
